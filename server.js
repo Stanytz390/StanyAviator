@@ -1,23 +1,23 @@
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve all files (HTML, PNG, CSS) from the root directory
+// Serve all static files (HTML, PNG, CSS, JS) from root directory
 app.use(express.static(__dirname));
 
-// Root route - show clickable list of all HTML files
+// Root route - serve index.html directly
 app.get('/', (req, res) => {
-  fs.readdir(__dirname, (err, files) => {
-    if (err) return res.status(500).send('Unable to read directory');
-    const htmlFiles = files.filter(f => f.endsWith('.html')).sort();
-    let list = '<h1 style="font-family:sans-serif;">🎯 Aviator Pages</h1><ul style="font-size:18px;line-height:2;">';
-    htmlFiles.forEach(f => {
-      list += `<li><a href="/${f}" target="_blank">${f}</a></li>`;
-    });
-    list += '</ul>';
-    res.send(list);
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// For any other route, try to serve the file (e.g., /betpawaaviator.html)
+app.get('*', (req, res) => {
+  const filePath = path.join(__dirname, req.path);
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      res.status(404).send('File not found');
+    }
   });
 });
 
