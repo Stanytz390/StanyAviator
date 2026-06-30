@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aviator Predictor</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0a0a1a;
+      color: #ffffff;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .container {
+      z-index: 1;
+      text-align: center;
+      padding: 20px;
+      border-radius: 20px;
+      background: rgba(10, 10, 30, 0.7);
+      box-shadow: 0 0 20px rgba(255, 50, 50, 0.2);
+      border: 1px solid rgba(255, 50, 50, 0.3);
+    }
+
+    .logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 25px rgba(255, 50, 50, 0.5);
+      border: 2px solid #ff3232;
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: bold;
+      color: #ff3232;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      text-shadow: 0 0 10px rgba(255, 50, 50, 0.7);
+    }
+
+    .telegram-icon {
+      font-size: 24px;
+      color: #ff3232;
+      text-shadow: 0 0 10px rgba(255, 50, 50, 0.7);
+    }
+
+    .circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: #0a0a1a;
+      border: 4px solid #ff3232;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: #ffffff;
+      box-shadow: 0 0 25px rgba(255, 50, 50, 0.5), inset 0 0 15px rgba(255, 50, 50, 0.3);
+      margin: 0 auto 20px;
+      transition: all 0.3s ease;
+      animation: none;
+    }
+
+    .circle.animate {
+      animation: pulse 1.2s ease-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 50, 50, 0.5), inset 0 0 10px rgba(255, 50, 50, 0.3); }
+      50% { transform: scale(1.15); box-shadow: 0 0 35px rgba(255, 50, 50, 0.7), inset 0 0 20px rgba(255, 50, 50, 0.5); }
+      100% { transform: scale(1); box-shadow: 0 0 25px rgba(255, 50, 50, 0.5), inset 0 0 15px rgba(255, 50, 50, 0.3); }
+    }
+
+    .predict-time {
+      color: #ff9999;
+      font-size: 16px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 6px rgba(255, 50, 50, 0.5);
+    }
+
+    .predict-btn {
+      background: #1a1a2e;
+      border: 2px solid #ff3232;
+      border-radius: 30px;
+      padding: 12px 40px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 0 12px rgba(255, 50, 50, 0.5);
+    }
+
+    .predict-btn:hover {
+      background: #ff3232;
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(255, 50, 50, 0.8);
+    }
+
+    .predict-btn:disabled {
+      background: #333344;
+      color: #999;
+      border-color: #444;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+</head>
+<body>
+  <div id="particles-js" class="background"></div>
+  <div class="container">
+    <img src="sokabet.png" alt="Aviator Icon" class="logo" />
+    <div class="title">
+      <span class="telegram-icon">✈️</span>
+      Aviator Predictor
+    </div>
+    <div id="prediction" class="circle">--</div>
+    <div id="time" class="predict-time">Predict on: --:--:--</div>
+    <button id="predictBtn" class="predict-btn" onclick="predictNow()">Predict</button>
+  </div>
+
+  <script>
+    // Particles Background
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 70, "density": { "enable": true, "value_area": 800 }},
+        "color": { "value": "#ff3232" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.5 },
+        "size": { "value": 3, "random": true },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ff3232",
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": { "enable": true, "speed": 2, "direction": "none", "out_mode": "out" }
+      },
+      "interactivity": {
+        "events": {
+          "onhover": { "enable": true, "mode": "repulse" },
+          "onclick": { "enable": true, "mode": "push" }
+        },
+        "modes": {
+          "repulse": { "distance": 100, "duration": 0.4 },
+          "push": { "particles_nb": 4 }
+        }
+      },
+      "retina_detect": true
+    });
+
+    // Realtime Clock Update
+    function updateLiveTime() {
+      const timeDiv = document.getElementById('time');
+      const now = new Date();
+      const formattedTime = now.getHours().toString().padStart(2, '0') + ":" +
+                            now.getMinutes().toString().padStart(2, '0') + ":" +
+                            now.getSeconds().toString().padStart(2, '0');
+      timeDiv.innerText = "Predict on: " + formattedTime;
+    }
+    setInterval(updateLiveTime, 1000);
+    updateLiveTime();
+
+    // Prediction Function
+    let cooldown = false;
+
+    function predictNow() {
+      if (cooldown) return;
+
+      const predictionValue = (Math.random() * (2.5 - 1.1) + 1.1).toFixed(2) + 'x';
+      const predictionDiv = document.getElementById('prediction');
+      const predictBtn = document.getElementById('predictBtn');
+
+      predictionDiv.innerText = predictionValue;
+      predictionDiv.classList.add('animate');
+
+      cooldown = true;
+      predictBtn.disabled = true;
+
+      setTimeout(() => {
+        cooldown = false;
+        predictBtn.disabled = false;
+      }, 900);
+
+      setTimeout(() => {
+        predictionDiv.classList.remove('animate');
+      }, 1200);
+    }
+  </script>
+</body>
+</html>
