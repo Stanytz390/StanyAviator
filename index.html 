@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stany Aviator Helper</title>
+    <!-- Font Awesome 6 (Icons only) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e17;
+            background-image: radial-gradient(circle at 30% 20%, #1a2744 0%, #070b12 90%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 48px;
+            padding: 35px 25px 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 215, 0, 0.08) inset;
+            text-align: center;
+        }
+
+        /* ---- LOGO YAKO JUU KATIKATI ---- */
+        .main-logo {
+            width: 130px;
+            height: 130px;
+            object-fit: contain;
+            margin: 0 auto 12px;
+            display: block;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.2));
+        }
+
+        .main-title {
+            font-size: 30px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #f5e56b, #f9a825);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+
+        .main-title i {
+            -webkit-text-fill-color: initial;
+            color: #f9a825;
+            margin-right: 8px;
+        }
+
+        .main-sub {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 18px;
+        }
+
+        .main-sub i {
+            margin-right: 8px;
+            color: #f9a825;
+        }
+
+        /* ---- GRID YA LOGO ZA KAMPUNI ---- */
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .brand-item {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 16px 8px;
+            transition: all 0.25s ease;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-item:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 215, 0, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .brand-item img {
+            width: 100%;
+            max-width: 80px;
+            height: auto;
+            max-height: 60px;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* ---- DISCLAIMER (FUPI TU) ---- */
+        .disclaimer {
+            background: rgba(255, 215, 0, 0.04);
+            border-left: 4px solid #f9a825;
+            padding: 14px 16px;
+            border-radius: 16px;
+            margin-bottom: 22px;
+            text-align: left;
+        }
+
+        .disclaimer p {
+            font-size: 13px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .disclaimer strong {
+            color: #f9a825;
+        }
+
+        .disclaimer i {
+            color: #ff9800;
+            margin-right: 6px;
+        }
+
+        /* ---- WHATSAPP CHANNEL BUTTON ---- */
+        .wa-channel {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #25D366;
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.25);
+            margin-top: 6px;
+        }
+
+        .wa-channel:hover {
+            transform: scale(1.04);
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.4);
+            background: #20b85f;
+        }
+
+        .wa-channel i {
+            font-size: 24px;
+        }
+
+        .footer-note {
+            margin-top: 22px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.12);
+            letter-spacing: 0.5px;
+        }
+
+        .footer-note i {
+            margin-right: 6px;
+            color: #f9a825;
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .container { padding: 20px 14px; }
+            .main-logo { width: 100px; height: 100px; }
+            .main-title { font-size: 22px; }
+            .brands-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+            .wa-channel { padding: 12px 20px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ==========================================
+        LOGO YAKO JUU KATIKATI
+        ========================================== -->
+        <img src="https://url.bmbxmd.workers.dev/aviatorlogo.png" alt="Stany Aviator Helper Logo" class="main-logo">
+        
+        <div class="main-title">
+            <i class="fas fa-life-ring"></i> Stany Aviator Helper
+        </div>
+        <div class="main-sub">
+            <i class="fas fa-jet-fighter-up"></i> Select Your Betting Site
+        </div>
+
+        <!-- ==========================================
+        GRID YA LOGO ZA KAMPUNI
+        ========================================== -->
+        <div class="brands-grid">
+            <a href="betpawaaviator.html" class="brand-item"><img src="betpawa.png" alt="BetPawa"></a>
+            <a href="sportybetaviator.html" class="brand-item"><img src="sportybet.png" alt="SportyBet"></a>
+            <a href="betwayaviator.html" class="brand-item"><img src="betway.png" alt="Betway"></a>
+            <a href="1xbetaviator.html" class="brand-item"><img src="1xbet.png" alt="1xBet"></a>
+            <a href="gsbaviator.html" class="brand-item"><img src="gsb.png" alt="GSB"></a>
+            <a href="meridianbetaviator.html" class="brand-item"><img src="meridianbet.png" alt="Meridianbet"></a>
+            <a href="parimatchaviator.html" class="brand-item"><img src="Parimatch.png" alt="Parimatch"></a>
+            <a href="slotpesaaviator.html" class="brand-item"><img src="slotpesa.png" alt="SlotPesa"></a>
+            <a href="sokabetaviator.html" class="brand-item"><img src="sokabet.png" alt="Sokabet"></a>
+            <a href="wasafiaviator.html" class="brand-item"><img src="wasafibet.png" alt="Wasafibet"></a>
+            <a href="sportpesaaviator.html" class="brand-item"><img src="sportpesa.png" alt="SportPesa"></a>
+        </div>
+
+        <!-- ==========================================
+        DISCLAIMER (FUPI) 
+        ========================================== -->
+        <div class="disclaimer">
+            <p>
+                <i class="fas fa-triangle-exclamation"></i>
+                <strong>Disclaimer:</strong> We are not responsible for any loss. 
+                No guarantee of accuracy. Please <strong>play responsibly</strong> and 
+                bet with caution.
+            </p>
+        </div>
+
+        <!-- ==========================================
+        WHATSAPP CHANNEL BUTTON 
+        ========================================== -->
+        <a href="https://whatsapp.com/channel/0029VbDA1ocH5JLru2ecxH1i" target="_blank" class="wa-channel">
+            <i class="fab fa-whatsapp"></i> Follow us on WhatsApp Channel
+        </a>
+
+        <div class="footer-note">
+            <i class="fas fa-crown"></i> Stany Aviator Helper &bull; Entertainment Only
+        </div>
+    </div>
+
+</body>
+</html>
